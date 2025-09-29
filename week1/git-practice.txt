@@ -1,0 +1,64 @@
+1. 개요
+- git : 코드 변경점 기록 (버전 관리 도구)
+- github : 온라인 백업, 공유, 협업 (온라인 코드 저장소)
+- 리눅스 명령어 : pwd, ls, ls-a, cd 폴더명
+
+2. 깃 필수 명령어
+- git config --global user.name 닉네임
+- git config --global user.email 이메일
+- git config -l
+
+- git init (초기 세팅 명령어, 딱 한번만 입력, 정확한 폴더에서 입력)
+
+- git add 파일명 (저장할 파일 지정)
+- git add . (모든 파일)
+- git commit -m "메세지 작성" (실제로 저장)
+- git status (변경상태 확인)
+
+- git log (저장내역 확인)
+
+3. github 백업하기
+- git remote add origin github 주소
+- git branch -M main
+- git push -u origin main
+
+- git push origin 브랜치명 (업로드)
+
+- git branch 브랜치이름 (브랜치 생성)
+- git branch (브랜치 확인)
+
+- git switch 브랜치이름 (브랜치 이동)
+- git checkout 브랜치이름 (브랜치 이동)
+
+- git switch -c 브랜치이름 (브랜치 생성&이동)
+- git checkout -b 브랜치이름 (브랜치 생성&이동)
+
+- git switch 최종브랜치이름
+- git merge 합칠브랜치이름 (브랜치 합치기)
+
+- pull request (git에서 합치기)
+
+- git pull origin 브랜치명 (github 코드 컴에 반영)
+
+- git config pull.rebase false
+- git pull origin main (오류나면 시도)
+
+4. 협업
+- main 브랜치 : 배포용
+- develop 브랜치 : 테스트용
+- 기능 브랜치 : 기능 개발용
+- 로컬에서 테스트
+
+5. 보너스
+- git reset --hard <커밋id> (과거 커밋으로 이동 - 특정한 커밋)
+- hard: 코드&커밋 모두 삭제
+- soft: 코드 그대로, 커밋만 삭제 (git add 후 상태)
+- mixed:코드 그대로, 커밋만 삭제 (git add 전 상태)
+
+- git stash (코드 임시 저장)
+- git stash list (임시 저장 내역)
+- git stash apply <stash@ 뒤 숫자> (임시 저장 다시 적용)
+- -m: 메세지 추가 / -u: git add 된 적 없는 파일도 포함 
+
+- git revert <커밋id> (과거 커밋으로 이동 - 새로운 커밋)
+
