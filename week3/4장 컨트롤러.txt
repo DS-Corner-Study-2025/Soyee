@@ -1,0 +1,25 @@
+4장 컨트롤러
+
+4.1 개요
+- 웹(사용자 요청) -> 디스패처 서블릿 -> 컨트롤러(메서드) -> 뷰
+- 컨트롤러는 사용자 요청 들어오면 -> 메서드에서 처리 -> 뷰로 결과 반환
+
+*** 구현 순서: 컨트롤러 정의(@Controller, @RestController) -> 요청 매핑경로 설정(@RequestMapping) -> 요청 처리 메서드 구현 -> 뷰, 모델 반환 ***
+
+4.2 컨트롤러 정의 
+- @Controller : 뷰 반환
+- @RestController : 뷰 없이 반환. 문자열, JSON
+
+4.3 @RequestMapping 요청 매핑 경로 설정
+- 사용자 요청 URL에 맞는 컨트롤러나 메서드로 연결
+- 속성은 value, method (생략의 경우에는 GET) 등
+- @RequestMapping 단순화 : value만 받고, method는 애너테이션에 명시
+- @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping
+
+4.4 요청 처리 메서드, 모델 유형
+- 사용자 요청을 처리하는 부분
+- Model, ModelMap, ModelAndView
+- Model : Model.addAttribute("data1", "Model 예제")
+- ModelMap : Model.addAttribute("data1", "ModelMap 예제")
+- ModelAndView : mav.addObject("data1", "ModelAndView 예제")
+			mav.setViewName("ViewPage")
