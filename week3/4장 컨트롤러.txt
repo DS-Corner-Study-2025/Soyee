@@ -12,6 +12,7 @@
 
 4.3 @RequestMapping 요청 매핑 경로 설정
 - 사용자 요청 URL에 맞는 컨트롤러나 메서드로 연결
+- 클래스 수준(컨트롤러에 선언) / 메서드 수준(클래스 내에 선언)
 - 속성은 value, method (생략의 경우에는 GET) 등
 - @RequestMapping 단순화 : value만 받고, method는 애너테이션에 명시
 - @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping
@@ -23,3 +24,50 @@
 - ModelMap : Model.addAttribute("data1", "ModelMap 예제")
 - ModelAndView : mav.addObject("data1", "ModelAndView 예제")
 			mav.setViewName("ViewPage")
+
+📌 빈칸 채우기 - 퀴즈
+1. 뷰 템플릿을 렌더링하는 전통적 MVC 컨트롤러를 선언할 때 사용하는 애너테이션은 @________ 이다. Controller
+
+2. @RestController는 ___와 ___를 합친 애너테이션이다. @Controller, @ResponseBody
+
+3. 클래스 레벨 @RequestMapping("/books")와 메서드 레벨 @GetMapping("/all")을 합친 최종 경로는? http://localhost:8080/books/all
+
+4. Model/ModelMap과 달리 뷰 이름까지 함께 설정할 수 있는 타입은 ________ 이다. ModelAndView
+
+5. @________를 사용하면 반환값이 뷰가 아니라 응답 본문으로 직접 전송되며, th:* 속성은 처리되지 않는다. RestController
+
+📌 코드1
+package com.springboot.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class Example01Controller {
+
+    @___________(value = "/exam01", method = RequestMethod.GET) //RequestMapping
+    public String requestMethod() {
+        return "viewPage01";
+    }
+}
+
+📌코드2
+package com.springboot.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class Example08Controller {
+
+    @_____________("/exam08") //GetMapping
+    public ModelAndView requestMethod() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("data1", "ModelAndView 예제");
+        mav.addObject("data2", "웹 요청 URL은 /exam08 입니다");
+        mav.setViewName("viewPage");
+        return mav;
+    }
+}
