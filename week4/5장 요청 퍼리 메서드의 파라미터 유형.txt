@@ -1,0 +1,68 @@
+5장 요청 퍼리 메서드의 파라미터 유형
+-----------------------------------------------
+1. 요청 파라미터
+1) 요청 파라미터란?
+- GET 방식의 쿼리문을 '이름 = 값' 형태 데이터로 전송하는 것
+- 다중 쿼리문은 &로 구분
+- 요청 파라미터 수가 많지 않을 때 사용 
+
+ex) http://localhost8080:/mycar?color=red&year=2025
+요청 파라미터 : color, year / 값 : red, 2025
+
+2) @RequestParam
+@Controller
+public class Example01Controller {
+	@GetMapping("/exam01")
+	public String requestMethod(@RequestParam("id") String userId, @RequestParam("passwd") String userPw, Model model) {
+		model.addAttribute("data1", "@RequestParam 예제");
+		model.addAttribute("data2", "요청 파라미터 id 값 : " + userId + "<br>요청 파라미터 passwd 값" + userPw);	
+		
+		return "viewPage";
+	}
+}
+--------------------------------------------------------
+2. 경로 변수
+1) 경로 변수란?
+URL의 요청 파라미터 값을 전달받을 때 사용
+ex) http://localhost8080:/car/red
+요청 파라미터 : color / 값 : red
+
+2) @PathVariable
+@GetMapping("/exam03/{id}")
+	public String requestMethod(@PathVariable("id") String userId, Model model) {
+		model.addAttribute("data1", "@PathVariable 예제");
+		model.addAttribute("data2", "경로 변수 id 값: " + userId);
+		
+		return "viewPage";
+	}
+@GetMapping("/exam04/{id}/{passwd}")
+	public String requestMethod(@PathVariable("id") String userId, @PathVariable("passwd") String userPw, Model model) {
+		model.addAttribute("data1", "@PathVariable 예제");
+		model.addAttribute("data2", "경로 변수 id 값: " + userId +"<br> 경로 변수 passwd 값: " + userPw);	
+		
+		return "viewPage";
+	}
+---------------------------------------------
+3. 매트릭스 변수
+1) 매트릭스 변수란?
+경로 변수와 동일하게 파라미터 값을 전달받으면서, 세미콜론으로 다중 데이터 전달받음.
+; 로 변수 값을 모음
+ex) http://localhost8080:/mycar;color=red;year=2025
+매트릭스 변수 : color, year / 값 : red, 2025
+
+2) @MatrixVariable
+@GetMapping("/exam05/{id}")
+	public String requestMethod(@PathVariable("id") String userId, @MatrixVariable("passwd") String userPw, Model model) {
+		model.addAttribute("data1", "@MatrixVariable 예제");
+		model.addAttribute("data2", "경로 변수 id 값: " + userId +"<br> 매트릭스 변수 passwd 값: " + userPw);	
+		
+		return "viewPage";
+	}
+@GetMapping("/exam07/{id}")
+	public String requestMethod(	
+			@PathVariable("id") String userId, @MatrixVariable(value="passwd", defaultValue="admin123") String userPw, Model model) {
+		model.addAttribute("data1", "@MatrixVariable 예제");
+		model.addAttribute("data2", "경로변수 id 값: " + userId + "<br> 매트릭스변수 passwd 값: " + userPw );		
+		
+		return "viewPage";
+	}
