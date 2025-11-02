@@ -1,0 +1,18 @@
+6장 폼 태그
+
+1. 폼 태그 개요
+- 사용자 -> 웹 요청 URL -> 폼 페이지 -> 웹 서버로 전달
+- GET 방식 : 폼 입력 페이지
+- POST 방식 : 응답 웹 페이지
+- <form 속성=' '> <input>, <select>, <textarea> </form>
+
+2. 데이터 바인딩 (@ModelAttribute)
+- 커맨드 객체 : 요청 파리미터를 프로퍼티로 데이터를 바인딩함
+- 롬복 : Getter(), Setter() 사용할 필요없이 자동생성. 의존성 주입 필요
+- @ModelAttribute : 폼페이지 데이터 전달되면  -> 커맨드 객체에 매핑 -> 데이터 프로퍼티에 채움
+- 매서드 수준의 @ModelAttribute
+
+3. 커스텀 데이터 바인딩 (@InitBinder)
+- @InitBinder : 매핑되기 전에 데이터 바인딩을 사용자 정의, WebDataBinder 객체 초기화하는 매서드와 함께 사용
+- SetAllowedFields() : 데이터 바인딩 허용
+- SetDisallowedFields() : 데이터 바인딩 허용 X
