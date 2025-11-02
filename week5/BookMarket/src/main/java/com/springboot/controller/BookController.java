@@ -1,0 +1,101 @@
+package com.springboot.controller;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.ModelAndView;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.util.Set;
+import java.util.Map;
+
+import com.springboot.domain.Book;
+import com.springboot.service.BookService;
+
+@Controller
+@RequestMapping(value = "/books")
+public class BookController {
+
+	@Autowired
+	private BookService bookService;
+
+	@GetMapping
+	public String requestBookList(Model model) {
+		List<Book> list = bookService.getAllBookList();
+		model.addAttribute("bookList", list);
+		return "books";
+	}	
+	/*
+	@GetMapping("/all")   
+	public String requestAllBooks(Model model) {
+		List<Book> list = bookService.getAllBookList(); 
+		model.addAttribute("bookList", list); 
+		return "books";
+	}
+	*/
+	
+	@GetMapping("/all")   
+	public ModelAndView requestAllBooks() {
+		ModelAndView modelAndView = new ModelAndView(); 
+		List<Book> list = bookService.getAllBookList();
+		modelAndView.addObject("bookList", list); 
+		modelAndView.setViewName("books"); 
+		return modelAndView;
+	}
+	
+	@GetMapping("/book") 
+	public String requestBookById(@RequestParam("id") String bookId, Model model) {  
+	   Book bookById = bookService.getBookById(bookId);
+	   model.addAttribute("book", bookById );
+	   return "book";
+	}
+	
+	@GetMapping("/{category}") 
+	public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {  
+	  List<Book> booksByCategory =bookService.getBookListByCategory(bookCategory); 
+	  model.addAttribute("bookList", booksByCategory); 
+	  return "books"; 
+	}
+	
+	@GetMapping("/filter/{bookFilter}")
+	public String requestBooksByFilter(
+	    @MatrixVariable(pathVar="bookFilter") Map<String,List<String>> bookFilter, Model model) {
+	    Set<Book> booksByFiter = bookService.getBookListByFilter(bookFilter);
+	    model.addAttribute("bookList", booksByFiter);
+	    return "books";
+	}
+	
+	 @GetMapping("/add")
+	 public String requestAddBookForm() {
+		 return "addBook";
+	 }
+	 
+	 @PostMapping("/add")	  
+	 public String submitAddNewBook(@ModelAttribute Book book) {
+	      bookService.setNewBook(book);
+	      return "redirect:/books";
+	 }
+	 
+	 @ModelAttribute 
+	 public void addAttributes(Model model) { 
+	     model.addAttribute("addTitle", "신규 도서 등록");
+	 }
+	 
+	 @InitBinder
+	 public void initBinder(WebDataBinder binder) {
+		 binder.setAllowedFields("bookId","name","unitPrice","author","description","publisher","category",
+	                              "unitsInStock","totalPages", "releaseDate", "condition");
+	 }
+
+}
