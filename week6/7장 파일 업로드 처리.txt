@@ -8,14 +8,107 @@
 - application.properties 설정
 
 - 파일 업로드 웹 페이지
-- 폼페이지
+- 폼 태크 사용
+- method 는 POST
+- enctype 는 multipart/form-data
+- action 는 실행 파일
+- input 태그의 type 속성은 file
+- 파일 업로드 수만큼 input 태크 사용
 
 - 정적 리소스 위치 설정
-- ResourceHttpRequestHandler
+- ResourceHttpRequestHandler 클래스 : 정적 리소스 쉽게 사용
+- ResourceHandlerRegistry : 정적 리소스가 저장된 파일 시스템에 접근
 
 7.2 MultipartFile
 - MultipartFile 인터페이스 메서드
+getName()
+getOriginalFilename()
+transgerTo(File dest)
 
 - MultipartHttpServletRequest
+HttpServletRequest, MultipartRequest 인터페이스 상속 필요
+HttpServletRequest( -> getParameter() 메서드 이용), MultipartRequest( -> getFile() 메서드 이용)
+
 - @RequestParam
+@ RequestParam이 적용된 MultipartFile 타입의 매개변수 사용
+
 - @ModelAttribute
+MultipartFile 타입의 멤버 변수 추가 (요청 매개변수와 동일한 이름)
+@ModelAttribute 를 선언
+
+빈칸 Quiz
+1. 파일을 업로드할 때, 웹 페이지에서는 (      ) 태크를 이용한다.
+2. 파일 업로드를 할 때 사용하는 인터페이스는 (             ) 이다. 
+3. 정적 리소스는 (                   ) 클래스로 쉽게 처리 가능하다.
+4. 폼 태그의 method 속성은 (            ) 를 반드시 사용한다.
+5. MutipartFile 인터페이스와 함께 (              ), (                ) 에너테이션을 사용하여 업로드한 파일을 전달받을 수 있다.
+
+답:
+1. 폼(form)
+2. MultipartFile
+3. ResourceHttpRequestHandler
+4. POST
+5. @RequestParam, @ModelAttribute
+
+코딩문제 1
+답: @RequestParam, MultipartFile
+
+@Controller
+@RequestMapping("/exam02")
+public class Example02Controller {
+
+   @GetMapping("/form")
+   public String requestForm() {
+      return "viewPage";
+   }
+
+   @PostMapping("/form")
+   public String submitForm(@RequestParam("name") String name, //      
+                              ____________("fileImage") _____________ file, Model model) {
+      String filename = file.getOriginalFilename();
+      File saveFile = new File("c:\\upload\\" + name + "_" + filename);     
+ 
+      try {
+         file.transferTo(saveFile); //파일 업로드
+         
+         model.addAttribute("data1","@RequestParam 예졔" );         
+         model.addAttribute("data2",filename);
+         model.addAttribute("data3", saveFile.getName() );
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      return "viewPage_process";
+   }
+}     
+
+코딩문제2
+답: MultipartFile
+@Controller
+@RequestMapping("/exam03")
+public class Example03Controller {
+   
+   @GetMapping("/form")
+   public String requestForm(Member member) {
+      return "viewPage";
+   }
+
+   @PostMapping("/form")
+   public String submitForm(@ModelAttribute Member member, Model model){   
+        String name = member.getName(); // 파일 이름
+        ____________ file = member.getFileImage(); // 파일 이미지
+        
+        String filename = file.getOriginalFilename();  
+        File saveFile = new File("c:\\upload\\" + name + "_" + filename);  
+        try {
+           file.transferTo(saveFile); // 파일 업로드
+           
+           model.addAttribute("data1","@ModelAttribute 예졔" );
+         model.addAttribute("data2",filename);
+         model.addAttribute("data3", saveFile.getName() );
+         
+        }catch (IOException e) {            
+            e.printStackTrace();
+        }
+      return "viewPage_process";
+   }
+}
