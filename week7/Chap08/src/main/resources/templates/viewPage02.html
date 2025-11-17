@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Chap08</title>
+</head>
+<style>
+span {
+    color: red;  
+}
+</style>
+<body>
+	<h3>다국어 처리</h3>		
+	<p><span th:text="#{Person.form.Enter.message}"/>
+	<form action="#" method="post">  
+	
+        <p><span th:text="#{Person.form.name}"/>：<input type="text" name="name"  />       
+        <p><span th:text="#{Person.form.email}"/>：<input type="text" name="email" /> 
+        <p><input type="submit" value="확인" />
+           <input type="reset" value="취소"/>       
+    </form>  
+</body>
+<html> 
