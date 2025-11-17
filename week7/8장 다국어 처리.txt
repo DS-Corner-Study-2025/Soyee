@@ -1,0 +1,42 @@
+8장 다국어 처리
+
+1. 다국어 처리 개요
+- 로케일에 따라 다양한 언어 지원
+- 로케일 : 지역별 설정을 정의하는 문자열 (언어, 글자, 날짜, 시간 표시 양식 등등)
+- 국제화 -> 코드변경X, 별도 페이지X 
+
+2. 다국어 처리 
+
+- 메세지 리소스 파일 (resource 파일 안에 존재)
+message.properties 
+message_ko.properties - 한국어
+message_en.properties - 영어
+message_en_US.properties - 영어(영국)
+message_ja.properties - 일본어
+
+- 메세지 리소스 파일 내용
+Person.form.Enter.message = value
+
+- MessageSource 인터페이스 구현체
+(1) ResourceBundleMessageSource : 자동으로 빈 객체 등록되어있음 -> 메시지 리소스 파일에서 가져올 수 있음
+(2) ReloadableResourceBundleMessageSource : 실행 도중에 메세지 다시 로드 가능
+
+- MessageSource 메세지 출력
+<span th:text="#{Person.form.Enter.message}"/>
+
+- 사용자 정의 환경 설정
+- application.properties
+- application.yml
+- spring.message.basename = message/i18n
+
+3. 다국어 변경
+- 로케일 설정
+- LocaleResolver
+- 구현체 유형 : AcceptHeader, Cookie, Session, Fixed
+
+- 로케일 변경
+- LocaleChangeInterceptor
+- 컨트롤러 구현X
+
+
+
