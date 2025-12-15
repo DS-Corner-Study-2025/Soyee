@@ -1,0 +1,31 @@
+10장 시큐리티 처리
+
+1. 스프링 시큐리티 개요
+- 스프링 시큐리티 : 스프링 기반 보안 프레임워크
+- 사용자 인증 절차, 인가 절차
+- 기본 설정 : 의존 라이브러리 설정
+
+2. 시큐리티 세부 구성 설정
+- 클래스 생성 -> 빈등록
+- 접근 권한 설정 : SecurityFilterChain
+- 사용자 정보 설정 : UserDetailsService
+- 사용자 비밀번호의 암호화 설정 : PasswordEncoder
+
+3. 사용자 정보 검색
+- 컨트롤러에서 사용자 정보 검색
+- Principal
+- Authentication
+- @AuthenticationPrincipal
+- 뷰페이지에서 사용자 정보 검색
+- <sec:authorize>
+- <sec:authentication>
+
+4. 로그인과 로그아웃 처리
+- 로그인 처리 
+- 기본 인증 방식
+- 접근 요청 -> 사용자 이름과 비밀번호 확인 (Authorization) -> 인증 처리
+- 폼 기반 인증 ㅇ방식
+- 접근 요청 -> 사용자 이름과 비밀번호 확인 (UsernamePasswordAuthenticationFilter) -> 인증 처리
+
+- 로그아웃 처리
+- http.logout()
