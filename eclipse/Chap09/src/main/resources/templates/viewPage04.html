@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Chap09</title>
+<style>
+span {
+     color: red;
+    border-color: red;
+}
+
+</style>
+</head>
+<body>
+	<h3>유효성 검사</h3>
+	<form th:object="${person}" action ="/exam04"  method="post">
+		<p>이름 : <input type="text" name="name" th:field="*{name}" /> <span th:errors="*{name}"></span>
+		<p>나이 : <input type="text" name="age" th:field="*{age}" /> <span th:errors="*{age}"></span>	
+		<p>이메일 : <input type="text" name="email" th:field="*{email}" /> <span th:errors="*{email}"></span>	
+		<p><input type="submit" value="확인"/> 
+		<input type="reset"  value="취소"/>
+	</form>
+</body>
+<html>
+
