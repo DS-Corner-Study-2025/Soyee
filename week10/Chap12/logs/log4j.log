@@ -1,0 +1,13 @@
+[INFO ] 2024-07-09 20:58:39.958 [main] Chap12Application - Starting Chap12Application using Java 17.0.6 with PID 7812 (C:\Users\user\eclipse-workspace\Chap12\bin\main started by user in C:\Users\user\eclipse-workspace\Chap12)
+[INFO ] 2024-07-09 20:58:39.963 [main] Chap12Application - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-07-09 20:58:40.650 [main] TomcatWebServer - Tomcat initialized with port 8080 (http)
+[INFO ] 2024-07-09 20:58:40.663 [main] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 2024-07-09 20:58:40.668 [main] StandardService - Starting service [Tomcat]
+[INFO ] 2024-07-09 20:58:40.669 [main] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[INFO ] 2024-07-09 20:58:40.722 [main] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2024-07-09 20:58:40.723 [main] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 722 ms
+[INFO ] 2024-07-09 20:58:41.009 [main] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 2024-07-09 20:58:41.026 [main] TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+[INFO ] 2024-07-09 20:58:41.041 [main] Chap12Application - Started Chap12Application in 1.375 seconds (process running for 2.231)
+[INFO ] 2024-07-09 20:58:51.499 [RMI TCP Connection(7)-127.0.0.1] SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+[INFO ] 2024-07-09 20:58:51.502 [RMI TCP Connection(7)-127.0.0.1] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
