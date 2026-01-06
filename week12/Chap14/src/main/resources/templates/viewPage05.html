@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Chap14</title>
+</head>
+<body>
+	<div align="center">
+		<h3>JPA 데이터베이스</h3>
+		<br>Product
+		<table border="1" cellpadding="10">
+			<tr>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>가격</th>
+
+			</tr>
+			<tr th:each="product : ${productList}">
+				<td th:text="${product.id}"></td>
+				<td th:text="${product.name}"></td>
+				<td th:text="${product.price}"></td>
+
+			</tr>
+		</table>
+		<br> Detail
+
+		<table border="1" cellpadding="10">
+			<tr>
+				<th>아이디</th>
+				<th>설명</th>
+				<th>무게</th>
+				<th>높이</th>
+				<th>너비</th>
+			</tr>
+			<tr th:each="detail : ${detailList}">
+				<td th:text="${detail.id}"></td>
+				<td th:text="${detail.description}"></td>
+				<td th:text="${detail.weight}"></td>
+				<td th:text="${detail.height}"></td>
+				<td th:text="${detail.width}"></td>
+			</tr>
+		</table>
+
+	</div>
+</body>
+</html>

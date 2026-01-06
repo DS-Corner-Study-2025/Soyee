@@ -1,0 +1,137 @@
+14장. 데이터베이스 연동
+
+### 빈칸 문제
+1. SQL 명령어 중에서 데이터를 조회할 때는 (        ), 데이터를 삽입할 때는 (        ), 데이터를 수정할 때는 (        ), 데이터를 삭제할 때는 (        ) 명령어를 사용한다.
+2. JDBC로 CRUD 처리할 때 데이터베이스 연동에서 데이터 조회, 삽입, 수정, 삭제 처리하기 위해 사용하는 클래스는?
+3. RowMapper를 사용하여 조회 결과를 객체 리스트로 반환하는 JdbcTemplate 메서드는?
+4. 객체-관계 매핑(ORM)을 위한 자바 표준 API는?
+5. JPA에서 사용자 정의 쿼리문을 작성 가능하게 하는 애너테이션은?
+
+### 코드 문제
+1.  @Controller
+@RequestMapping("/exam01")
+public class Example01Controller {
+
+	// 선언 부분 추가
+	_______________
+	JdbcTemplate jdbcTemplate;
+	
+	@GetMapping
+	public String requestMethod(Model model) {
+    	// 데이터 조회
+		 String sql = "SELECT * FROM person";
+		 List<Person>  personList= jdbcTemplate._______(sql, BeanPropertyRowMapper.newInstance(Person.class));		
+	
+		model.addAttribute("personList", personList);
+		return "viewPage01";
+	}	
+	
+	@GetMapping("/new") // 삽입 뷰 페이지
+	public String newMethod(Model model) {
+		Person person = new Person();
+		model.addAttribute("person", person);
+		
+		return "viewPage01_new";
+	}
+	
+	@PostMapping("/insert")
+	public String insertMethod(@ModelAttribute("Person") Person person) {
+        // 데이터 삽입
+		String sql = "INSERT INTO person (name, age, email) VALUES (?, ?, ?)";
+		int result = jdbcTemplate.__________(sql, person.getName(), person.getAge(), person.getEmail());
+		
+		return "redirect:/exam01";
+	}
+	
+	@GetMapping("/edit/{id}") // 수정 뷰 페이지
+	public String editMethod(@PathVariable(name = "id") int id, Model model) {
+				
+		 String sql = "SELECT * FROM person WHERE id =?";		
+		 Person person = jdbcTemplate.queryForObject(sql,
+				 BeanPropertyRowMapper.newInstance(Person.class), id);
+		 model.addAttribute("person", person);
+		
+		return "viewPage01_edit";
+	}	
+	
+	@PostMapping("/update")
+	public String updateMethod(@ModelAttribute("Person") Person person) {
+	// 데이터 수정
+		String sql = "UPDATE person SET name=?, age=?, email=? WHERE id=?";
+		int result = jdbcTemplate.update(sql, person.getName(), person.getAge(), person.getEmail(), person.getId()); 		
+				
+		return "redirect:/exam01";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String deleteMethod(@PathVariable(name = "id") int id) {
+    	// 데이터 삭제
+		String sql = "DELETE FROM person WHERE id=?";		
+		int result = jdbcTemplate.update(sql, id);
+		
+		return "redirect:/exam01";
+	}
+
+}
+
+2. 
+@Controller
+@RequestMapping("/exam03")
+public class Example03Controller {
+	
+	@Autowired
+	MemberRepository03 repository;
+	
+	@GetMapping // 데이터 조회	
+	public String viewHomePage(Model model) {		
+		Iterable<Member> memberList = repository.selectMethod();
+		System.out.println(memberList);
+		model.addAttribute("memberList", memberList);
+		return "viewPage03";
+	}
+	
+	@GetMapping("/new") // 삽입 뷰 페이지
+	public String newMethod(Model model) {
+		Member member = new Member();
+		model.addAttribute("member", member);
+		return "viewPage03_new";
+	}
+	
+	@PostMapping("/insert") // 데이터 삽입
+	public String insertMethod(@ModelAttribute("member") Member member) {		
+		repository._____________(member.getName(), member.getAge(), member.getEmail());
+		//repository.insertMethod2(member);
+		return "redirect:/exam03";
+	}
+	
+	@GetMapping("/edit/{id}") // 수정 뷰 페이지
+	public String editMethod(@PathVariable(name = "id") int id, Model model) {
+		Member  member = repository.selectMethodById(id);
+		 model.addAttribute("member", member);
+		return "viewPage03_edit";
+	}	
+	
+	@PostMapping("/update") // 데이터 수정
+	public String updateMethod(@ModelAttribute("member") Member member) {
+		repository._________( member.getName(), member.getAge(), member.getEmail(), member.getId());	
+		//repository.updateMethod2(member);
+		return "redirect:/exam03";
+	}
+	
+	@GetMapping("/delete/{id}") // 데이터 삭제
+	public String deleteMethod(@PathVariable(name = "id") int id) {	
+		repository.______________(id);
+		return "redirect:/exam03";
+	}
+}
+
+### 빈칸 문제 답
+1. SELECT, INSERT, UPDATE, DELETE
+2. JdbcTemplate 
+3. query()
+4. JPA (Java Persistent API)
+5. @Query
+
+### 코드 문제 답
+1. @Autowired, query, update
+2. insertMethod, updateMethod, deleteMethod
